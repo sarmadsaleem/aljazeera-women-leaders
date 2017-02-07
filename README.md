@@ -4,4 +4,4 @@ AlJazeera interactive for visual representation of female leaders around the wor
 
 Disclaimer: This was a freelance gig, all trademark, copyrights and intellectual property rights rest with Al Jazeera Media Network.
 
-![Screenshot](https://raw.github.com/sarmadsaleem/aljazeera-women-leaders-2017/master/screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/sarmadsaleem/aljazeera-women-leaders-2017/master/screenshot.png)
