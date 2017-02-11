@@ -159,7 +159,7 @@ function populateMobile(){
       console.log(leaders[i].region.mselector + ' .m-items .m-scroll');
       
       // append leader to respective region
-      $(leaders[i].region.mselector + ' .m-items .m-scroll').append('<div class="m-item"><a href="#"><img style="width:100%; border-radius:100px;" src="assets/img/'+leaders[i].image+'"/></a></div>');
+      $(leaders[i].region.mselector + ' .m-items .m-scroll').append('<div class="m-item"><a href="#" data-toggle="modal" data-target="#myModal"><img style="width:100%; border-radius:100px;" src="assets/img/'+leaders[i].image+'"/></a></div>');
 
     }
 
@@ -227,11 +227,11 @@ $(document).ready(function(){
 /* shrink */
 $(window).scroll(function() {
   if ($(document).scrollTop() > 50) {
-    $('.nav-top').addClass('shrink');
-    $('.navbar-brand').addClass('shrinklogo');
+    $('#head').addClass('shrink');
+    $('#head .navbar-brand').addClass('shrinklogo');
   } else {
-    $('.nav-top').removeClass('shrink');
-    $(".navbar-brand").removeClass("shrinklogo");
+    $('#head').removeClass('shrink');
+    $("#head .navbar-brand").removeClass("shrinklogo");
   }
 });
 /* shrink end */
