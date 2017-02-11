@@ -54,6 +54,9 @@ nav.navbar {
 /* header end */
 
 /* battle ground */
+.mtitle{font-weight:200;font-size:50px; margin:25px 20px 60px 20px; text-align:center;}
+
+
 .region{
 	display: inline-block;
 	width:15%;
@@ -62,7 +65,7 @@ nav.navbar {
 }
 
 .region .title{text-transform: uppercase; text-align:center; color:#666666; font-weight: 900; font-size:14px; padding:3px; }
-.region .body{background: #EFEFEF; min-height: 1000px; padding-top:15px; height:auto;}
+.region .body{background: #EFEFEF; min-height: 500px; padding-top:15px; height:auto;}
 
 #asia .body{border-top: 5px solid #cc6600;}
 #europe .body{border-top: 5px solid #006666;}
@@ -90,7 +93,7 @@ nav.navbar {
 .leader .text .name{white-space: nowrap; background: #333333; color:#fff; padding:2px 10px 2px 10px; font-size:20px; font-weight: 500; border-bottom:5px solid #cc6600;}
 .leader .text .designation{white-space: nowrap; padding-left:10px; text-transform: uppercase; font-weight: 600; color:#cc6600; font-size:12px; padding-top:3px;}
 
-.m-region{height: auto; background:#cc6600; color:#fff; text-align: center; font-size:28px; font-weight: 500; padding:25px;}
+.m-region{height: auto; background:#cc6600; color:#fff; text-align: left; font-size:28px; font-weight: 500; padding:25px 25px 15px 25px}
 #m-asia{background:#cc6600;}
 #m-europe{background:#006666;}
 #m-africa{background:#993300;}
@@ -99,10 +102,39 @@ nav.navbar {
 #m-south-america{background:#666699;}
 #m-middle-east{background:#cc9966;}
 /* battle ground */
+.m-title{display: inline; float:left; margin-top:7px; margin-right:10px; text-transform: uppercase; opacity: 0.5;font-size: 24px;font-weight: 800;}
+
+.m-items{
+    width:75%;
+    overflow-x:scroll;
+    overflow-y:hidden; 
+    height:50px;
+    position:relative;
+    display: inline-block;
+    padding-left:10px;
+    
+}
+.m-items .m-scroll{
+    height:100%;
+    padding:0px;
+    width:auto;
+    position:absolute;
+    white-space:nowrap;
+}
+.m-items .m-item{
+    height:100%;
+    margin-left:10px;
+    margin-right:10px;
+    width:50px;   
+    position:relative;
+    display:inline-block;
+}
+
+.m-items .m-item a{width: 50px; }
 
 
 /* footer start */
-footer{margin-top:20px;}
+footer{margin-top:0px;}
 
 #footer-secondary2 nav a{
 	margin-right:20px;
@@ -134,5 +166,15 @@ footer{margin-top:20px;}
 
 
 /* media queries start */
+@media screen and (max-width: 991px) {
+    
+    .mtitle{text-align:left;}
+}
+
+@media screen and (min-width: 992px){
+    #footer-secondary1{margin-top:30px;}
+}
+
+
 /* media queries end */
 
