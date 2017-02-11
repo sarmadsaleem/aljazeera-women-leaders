@@ -102,6 +102,9 @@ nav.navbar {
 #m-south-america{background:#666699;}
 #m-middle-east{background:#cc9966;}
 /* battle ground */
+
+
+
 .m-title{display: inline; float:left; margin-top:7px; margin-right:10px; text-transform: uppercase; opacity: 0.5;font-size: 24px;font-weight: 800;}
 
 .m-items{
@@ -134,23 +137,50 @@ nav.navbar {
 
 
 .m-leader .modal-content{background:#CC6600;}
-.modal-dialog {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
 
-.modal-content {
-  height: auto;
-  min-height: 100%;
-  border-radius: 0;
-  border:0;
-}
+.m-leader .m-image{width:150px;top: 35%;left: 50%;position: absolute;}
+.m-leader .m-image img{border:5px solid #CC6600;border-radius:200px;width:100%;}
+
+.m-leader .m-title{color:#fff; font-weight:300;line-height:20px;padding-left: 35%;font-size: 20px;padding-top: 10px;margin-bottom: 18px; padding-right:30px;}
+.m-leader .m-name{margin:10px 0 10px 0; padding:0; color: #fff;font-weight: 300;}
+.m-leader .m-name span{font-weight:600;display:block;}
+
+.m-leader .m-designation{color:#fff;text-transform: uppercase; font-size:14px; margin: 5px 0 15px 0;}
+.m-leader .m-tenure{margin:10px 0 15px 0;color:#fff; font-weight:600; background:#ea9900;  margin-left: -25px;padding:10px 0 10px 25px; font-size:16px;}
+
+.m-leader .m-info{color:#fff; font-size:18px; font-weight:300; width:50%;}
 
 .modal-body{padding:25px 25px 15px 25px}
+.modal-content{border-radius:0;}
 
 .modal-footer {border-top: 0px solid #e5e5e5;}
+#head2{display: none}
+.m-leader .m-title{display: none;}
+
+.m-tc{width: 100%;height: 70px;}
+
+
+
+.triangle1 {
+   width: 0;
+   height: 0;
+   border-left: 100vw solid #de8200;
+   border-top: 50vh solid transparent;
+   border-bottom: 50vh solid transparent;
+   position: absolute;
+}
+
+.triangle2{ 
+       width: 0;
+    height: 0;
+    border-bottom: 50vh solid #d65b06;
+    border-left: 100vw solid transparent;
+    position: absolute;
+    top: 50vh;
+
+
+}
+
 
 
 /* footer start */
@@ -193,6 +223,72 @@ footer{margin-top:0px;}
 
 @media screen and (min-width: 992px){
     #footer-secondary1{margin-top:30px;}
+}
+
+@media screen and (max-width:620px){
+
+    .modal-dialog {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.modal-content {
+  height: auto;
+  min-height: 100%;
+  
+  border:0;
+
+}
+
+
+#head2{display: block}
+
+.m-tc{display:block !important;}
+
+.m-leader .m-title{    text-transform: none;
+    opacity: 1;
+    width: 350px;
+display: block;
+    color: #fff;
+    font-weight: 300;
+    line-height: 20px;
+    padding-left: 120px;
+    font-size: 22px;}
+.m-leader .m-tenure{margin-right: 28% !important;}
+.m-leader .m-image{    width: 200px !important;
+    
+    bottom: 0;
+    top: 50vh;
+    margin-top: -100px;
+    right: 0;
+    left: 100vw;
+    margin-left: -201px;
+   }
+
+.m-leader .m-name{margin-top:40px !important;}
+#head .navbar-brand{left: 75px !important; }
+.mtitle{font-size:38px;margin-bottom:30px !important; }
+
+
+}
+
+@media screen and (min-width:621px){
+
+    .triangle1{display:none;}
+    .triangle2{display:none;}
+
+    .m-tc{display:none !important;}
+
+    .m-leader .m-tenure{margin-right:100px !important;}
+
+    .m-leader .m-name{margin-top:10px !important;}
+    .m-leader .m-image{width:220px !important; top:22% !important; left:60% !important;}
+    .m-leader .m-info{width:60% !important;}
+
+    .modal-body{min-height:350px;}
+
 }
 
 

@@ -1,3 +1,8 @@
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.split(search).join(replacement);
+};
+
 /* data */
 var regions = {
     'asia':{
@@ -46,6 +51,8 @@ var regions = {
 
 /* populate desktop by fetching data and appending to respective region */
 function populateDesktop(){
+
+  destroyDesktop();
   
   var leaders = [];
   var apiEndpoint = 'https://spreadsheets.google.com/feeds/list/1K3W6IO4vqRljer3XDHAvrt6xSxz3d4dwnXVvdZ339i0/od6/public/values?alt=json';
@@ -89,7 +96,7 @@ function populateDesktop(){
       //console.log(leaders[i]);
       
       // append leader to respective region
-      $(leaders[i].region.selector + ' .body').append('<div id="leader-'+i+'" class="leader"><div class="image"><img style="border:solid 5px ' + leaders[i].region.color + ';" src="assets/img/' + leaders[i].image + '"/></div><div class="text"><div class="tenure">'+ leaders[i].tenure + '</div><div class="name" style="border-bottom:5px solid '+leaders[i].region.color+';">'+ leaders[i].name +'</div><div class="designation" style="color:'+leaders[i].region.color+'">'+ leaders[i].designation +'</div></div></div>');
+      $(leaders[i].region.selector + ' .body').append('<a style="color:'+leaders[i].region.color+'" class="modal-trigger" href="#" data-toggle="modal" data-target="#modal-leader'+i+'"><div id="leader-'+i+'" class="leader"><div class="image"><img style="border:solid 5px ' + leaders[i].region.color + ';" src="assets/img/' + leaders[i].image + '"/></div><div class="text"><div class="tenure">'+ leaders[i].tenure + '</div><div class="name" style="border-bottom:5px solid '+leaders[i].region.color+';">'+ leaders[i].name +'</div><div class="designation" style="color:'+leaders[i].region.color+'">'+ leaders[i].designation +'</div></div></div></a>');
 
       // choose left or right positioning for text
       if($(leaders[i].region.selector).position().left > ($(window).width() / 2))
@@ -126,6 +133,7 @@ function populateMobile(){
 
     // fetch entry object from json response
     entry = data.feed.entry;
+    //console.log(entry);
 
     // push each entry object in leaders
     $(entry).each(function(){
@@ -142,6 +150,7 @@ function populateMobile(){
         'region': regions[this.gsx$region.$t],
         'image': (this.gsx$image.$t == '') ? 'leaders/no-avatar.png' : 'leaders/'+this.gsx$image.$t,
         'start_year': start_year[0],
+        'info': this.gsx$information.$t,
       }
 
       leaders.push(clone);
@@ -156,10 +165,15 @@ function populateMobile(){
     // iterate over fetched list
     for (var i = 0; i < leaders.length; i++) {
 
-      console.log(leaders[i].region.mselector + ' .m-items .m-scroll');
+      //console.log(leaders[i].region.mselector + ' .m-items .m-scroll');
       
       // append leader to respective region
-      $(leaders[i].region.mselector + ' .m-items .m-scroll').append('<div class="m-item"><a href="#" data-toggle="modal" data-target="#myModal"><img style="width:100%; border-radius:100px;" src="assets/img/'+leaders[i].image+'"/></a></div>');
+      $(leaders[i].region.mselector + ' .m-items .m-scroll').append('<div class="m-item"><a class="modal-trigger" href="#" data-toggle="modal" data-target="#modal-leader'+i+'"><img style="width:100%; border-radius:100px;" src="assets/img/'+leaders[i].image+'"/></a></div>');
+      
+
+      $('#leader-modal-container').append('<div id="m-leader-'+i+'" class="m-leader"><div class="modal fade" id="modal-leader'+i+'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"><div class="modal-dialog" role="document"><div class="modal-content" style="background:#CC6600;"><div class="triangle1"></div><div class="triangle2">&nbsp;</div><div class="modal-body"><nav id="head2" class="navbar nav-top navbar-default navbar-fixed-top shrink"><div class="container-fluid"><div class="navbar-header"><a style="left: 75px;" class="navbar-brand navbar-brand-centered" href="http://aljazeera.com" target="_blank"><img alt="Al Jazeera" width="100" height="auto" src="assets/img/aj-logo.jpg"></a></div><div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"></div></div></nav><button type="button" class="close" data-dismiss="modal" style="margin-top:20px;">&times;</button><div class="m-image" style=""><img style="" src="assets/img/'+leaders[i].image+'"/></div><div class="m-tc"><div class="m-title" style="">Women leaders around the world</div></div><h1 class="m-name" style="">'+leaders[i].name+'</h1><h2 class="m-designation" style="">'+leaders[i].designation+'</h2><div class="m-tenure" style="">'+leaders[i].tenure.replaceAll(',','<br/>')+'</div><div class="m-info" style=""><p>'+leaders[i].info+'</p></div></div></div></div></div></div>');
+
+
 
     }
 
@@ -206,9 +220,9 @@ function resizeMobile(){
 /* */
 $(window).resize(function(){
 
-  //destroyDesktop();
-  //populateDesktop();
-  resizeMobile();
+    populateDesktop();
+    resizeMobile();
+  
   
 });
 /* */
@@ -216,9 +230,12 @@ $(window).resize(function(){
 
 /* */
 $(document).ready(function(){
+
   populateDesktop();
   resizeMobile();
   populateMobile();
+
+  
 
 });
 /* */
@@ -235,4 +252,36 @@ $(window).scroll(function() {
   }
 });
 /* shrink end */
+
+/**
+ * Vertically center Bootstrap 3 modals so they aren't always stuck at the top
+ */
+
+$('.modal-trigger').on("click", function(){
+    // Reposition when a modal is shown
+    $('.modal').on('show.bs.modal', reposition);
+    // Reposition when the window is resized
+    $(window).on('resize', function() {
+        $('.modal:visible').each(reposition);
+    });
+
+})
+
+
+    function reposition() {
+        var modal = $(this),
+            dialog = modal.find('.modal-dialog');
+        modal.css('display', 'block');
+        
+        // Dividing by two centers the modal exactly, but dividing by three 
+        // or four works better for larger screens.
+        dialog.css("margin-top", Math.max(0, ($(window).height() - dialog.height()) / 2));
+    }
+    // Reposition when a modal is shown
+    $('.modal').on('show.bs.modal', reposition);
+    // Reposition when the window is resized
+    $(window).on('resize', function() {
+        $('.modal:visible').each(reposition);
+    });
+
 
