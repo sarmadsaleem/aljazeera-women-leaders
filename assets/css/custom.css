@@ -149,7 +149,8 @@ nav.navbar {
 .m-leader .m-designation{color:#fff;text-transform: uppercase; font-size:14px; margin: 5px 0 15px 0;}
 .m-leader .m-tenure{margin:10px 0 15px 0;color:#fff; font-weight:500; background:#ea9900;  margin-left: -25px;padding:10px 0 10px 25px; font-size:16px;}
 
-.m-leader .m-info{color:#fff; font-size:18px; font-weight:400; padding-right: 185px;overflow: scroll;line-height:22px;}
+.m-leader .m-info{color:#fff; font-size:18px; font-weight:400; padding-right: 185px;overflow: scroll;line-height:22px;    padding-bottom: 20px;
+    min-height: 18vh;}
 
 .modal-body{padding:25px 25px 15px 25px}
 .modal-content{border-radius:0;}
@@ -199,10 +200,11 @@ nav.navbar {
 .bottom_bar img{margin-top: -3px;margin-left: 3px; width:auto; height:30px;}
 
 
-.la{position: absolute; bottom:65px; left:50px; width:70px; height:70px;border-radius:100px; z-index:12;}
-.ra{position: absolute; bottom:65px; right:50px; width:70px; height:70px;border-radius:100px;z-index:12;}
+.la{position: relative; margin-bottom:65px; width:70px; height:70px;border-radius:100px; z-index:12; float: left;}
+.ra{position: relative; margin-bottom:65px; width:70px; height:70px;border-radius:100px;z-index:12; float:right;}
 .la img, .ra img{width:100%; border-radius:100px; height:auto;}
-.lever{position: absolute; bottom:100px; width:75%; height:5px; left:60px; right:60px;z-index:11;}
+.lever{position: relative; width:90%; height:5px; z-index:11;margin-left: 30px;
+    margin-top: 30px;}
 
 
 
@@ -297,7 +299,7 @@ display: block;
 .m-leader .m-name{margin-top:40px !important;}
 #head .navbar-brand{left: 75px !important; }
 .mtitle{font-size:38px;margin-bottom:30px !important; }
-.m-leader .m-info{height:33vh;}
+.m-leader .m-info{}
 
 
 }
@@ -314,7 +316,7 @@ display: block;
 
     .m-leader .m-name{margin-top:10px !important;}
     .m-leader .m-image{width:220px !important; top:22% !important; left:60% !important;}
-    .m-leader .m-info{width:60% !important; padding-right:0; min-height:30vh; max-height:40vh;}
+    .m-leader .m-info{width:60% !important; padding-right:0;}
 
     .modal-body{min-height:350px;}
 
