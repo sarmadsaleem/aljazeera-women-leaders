@@ -169,7 +169,7 @@ function populateMobile(){
       tnz = '<span style="font-weight:800;">' + tn[tn.length - 1] + '</span>';
       tn[tn.length - 1] = tnz;
       boo = tn.join();
-      boo = boo.replace(',','');
+      boo = boo.replaceAll(',',' ');
 
       clone = {
         'name' : boo,
@@ -202,8 +202,8 @@ function populateMobile(){
 
       if(i == 0)
       {
-        la = '';
-        ra = '<a class="modal-trigger" data-dismiss="modal" href="#" data-toggle="modal" data-target="#modal-leader'+(i+1)+'"><div class="ra"><img style="border:5px solid '+leaders[i+1].region.bn+'" src="assets/img/'+leaders[i+1].image+'"/></div></a>';
+        la = '<div class="la" style="visibility:hidden;"><img style="border:5px solid " src="assets/img/leaders/no-avatar.png"/></div>';
+        ra = '<a class="modal-trigger pull-right" data-dismiss="modal" href="#" data-toggle="modal" data-target="#modal-leader'+(i+1)+'"><div class="ra"><img style="border:5px solid '+leaders[i+1].region.bn+'" src="assets/img/'+leaders[i+1].image+'"/></div></a>';
         lever = '';
       }
 
@@ -217,17 +217,19 @@ function populateMobile(){
       else{
 
         var la = '<a class="modal-trigger" data-dismiss="modal" href="#" data-toggle="modal" data-target="#modal-leader'+(i-1)+'"><div class="la"><img style="border:5px solid '+leaders[i-1].region.bn+'" src="assets/img/'+leaders[i-1].image+'"/></div></a>';
-        var ra = '<a class="modal-trigger" data-dismiss="modal" href="#" data-toggle="modal" data-target="#modal-leader'+(i+1)+'"><div class="ra"><img style="border:5px solid '+leaders[i+1].region.bn+'" src="assets/img/'+leaders[i+1].image+'"/></div></a>';
+        var ra = '<a class="modal-trigger pull-right" data-dismiss="modal" href="#" data-toggle="modal" data-target="#modal-leader'+(i+1)+'"><div class="ra"><img style="border:5px solid '+leaders[i+1].region.bn+'" src="assets/img/'+leaders[i+1].image+'"/></div></a>';
         var lever = '<div class="lever" style="background:'+leaders[i].region.bn+'">&nbsp;</div>';
 
       }
 
+      var bb = '<div class="bottom_bar"><a class="close-trigger" href="#" data-dismiss="modal" aria-label="Close"><div class="cm"><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span></div></a><div class="cr">@AJLABS <img src="assets/img/aj-logo-cred.png"/></div></div>';
+
       
       
 
 
 
-      $('#leader-modal-container').append('<div id="m-leader-'+i+'" class="m-leader"><div class="modal fade" id="modal-leader'+i+'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"><div class="modal-dialog" role="document"><div class="modal-content" style="background:'+leaders[i].region.color+';"><div class="bottom_bar"><a href="#" data-dismiss="modal" aria-label="Close"><div class="cm"><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span></div></a><div class="cr">@AJLABS <img src="assets/img/aj-logo-cred.png"/></div></div><div class="triangle1" style="border-left: 100vw solid ' + leaders[i].region.t1 + ';"></div><div class="triangle2" style="border-bottom: 50vh solid '+ leaders[i].region.t2 + ';">&nbsp;</div><div class="modal-body"><nav id="head2" class="navbar nav-top navbar-default navbar-fixed-top shrink"><div class="container-fluid"><div class="navbar-header"><a style="left: 75px;" class="navbar-brand navbar-brand-centered" href="http://aljazeera.com" target="_blank"><img alt="Al Jazeera" width="100" height="auto" src="assets/img/aj-logo.jpg"></a></div><div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"></div></div></nav><button type="button" class="close" data-dismiss="modal" style="margin-top:20px;position: absolute;left: 100vw;margin-left: -30px;">&times;</button><div class="m-image" style=""><img style="border:5px solid '+leaders[i].region.color+'" src="assets/img/'+leaders[i].image+'"/></div><div class="m-tc"><div class="m-title" style="">Women leaders around the world</div></div><h1 class="m-name" style="">'+leaders[i].name+'</h1><h2 class="m-designation" style="">'+leaders[i].designation+'</h2><div class="m-tenure" style="background:'+leaders[i].region.bn+'">'+leaders[i].tenure.replaceAll(',','<br/>')+'</div><div class="m-info" style=""><p>'+leaders[i].info+'</p></div>'+la + ra + lever +'</div></div></div></div></div>');
+      $('#leader-modal-container').append('<div id="m-leader-'+i+'" class="m-leader"><div class="modal fade" id="modal-leader'+i+'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"><div class="modal-dialog" role="document"><div class="modal-content" style="background:'+leaders[i].region.color+';"><div class="triangle1" style="border-left: 100vw solid ' + leaders[i].region.t1 + ';"></div><div class="triangle2" style="border-bottom: 50vh solid '+ leaders[i].region.t2 + ';">&nbsp;</div><div class="modal-body"><nav id="head2" class="navbar nav-top navbar-default navbar-fixed-top shrink"><div class="container-fluid"><div class="navbar-header"><a style="left: 75px;" class="navbar-brand navbar-brand-centered" href="http://aljazeera.com" target="_blank"><img alt="Al Jazeera" width="100" height="auto" src="assets/img/aj-logo.jpg"></a></div><div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"></div></div></nav><button type="button" class="close close-trigger" data-dismiss="modal" style="margin-top:20px;position: absolute;left: 100vw;margin-left: -30px;">&times;</button><div class="m-image" style=""><img style="border:5px solid '+leaders[i].region.color+'" src="assets/img/'+leaders[i].image+'"/></div><div class="m-tc"><div class="m-title" style="">Women leaders around the world</div></div><h1 class="m-name" style="">'+leaders[i].name+'</h1><h2 class="m-designation" style="">'+leaders[i].designation+'</h2><div class="m-tenure" style="background:'+leaders[i].region.bn+'">'+leaders[i].tenure.replaceAll(',','<br/>')+'</div><div class="m-info" style=""><p>'+leaders[i].info+'</p></div>'+la + ra + lever + '</div>'+bb+'</div></div></div></div>');
 
 
 
@@ -338,67 +340,16 @@ $('.modal-trigger').on("click", function(){
         $('.modal:visible').each(reposition);
     });
 
-function fetchData(){
 
-  console.log('fetchData() invoked');
-
-  var leaders = [];
-  var apiEndpoint = 'https://spreadsheets.google.com/feeds/list/1K3W6IO4vqRljer3XDHAvrt6xSxz3d4dwnXVvdZ339i0/od6/public/values?alt=json';
-  var entry;
-  var clone;
-  
-  var request = new XMLHttpRequest();
-  request.open('GET', apiEndpoint, true);
-
-  request.onload = function() {
-    if (request.status >= 200 && request.status < 400) {
-      // Success!
-      var data = JSON.parse(request.responseText);
-      data = data.feed.entry;
-
-      for (var i = 0; i < data.length; i++) {
-        
-        start_year = data[i].gsx$tenure.$t;
-        start_year.replace('–', '-');
-        start_year = start_year.split('-');
-
-        clone = {
-          'name' : data[i].gsx$leader.$t,
-          'designation': data[i].gsx$designation.$t,
-          'tenure': data[i].gsx$tenure.$t,
-          'region': regions[data[i].gsx$region.$t],
-          'image': (data[i].gsx$image.$t == '') ? 'leaders/no-avatar.png' : 'leaders/'+data[i].gsx$image.$t,
-          'start_year': start_year[0],
-        }
-
-        leaders.push(clone);
-
-      }
-
-      console.log('fetchData() executed');
-      return leaders;
+//$('modal-trigger').on("click", function(){$("body").addClass("modal-open")});
+//$('close-trigger').on("click", function(){$("body").removeClass("modal-open")});
 
 
+// $(".modal").on("show", function () {
+//   $("body").addClass("modal-open");
+// }).on("hidden", function () {
+//   $("body").removeClass("modal-open")
+// });
 
-      
-    } else {
-      // We reached our target server, but it returned an error
-      console.log('fetchData() - Error occured while fetching data');
 
-    }
-  };
-
-  request.onerror = function() {
-    // There was a connection error of some sort
-  };
-
-  request.send();
-
-}
-var boo = fetchData();
-$.when(boo).then(function(data){
-
-  console.log(data);
-
-})
 
