@@ -10,42 +10,63 @@ var regions = {
       'selector': '#asia',
       'mselector': '#m-asia',
       'color': '#cc6600',
+      't1': '#de8200',
+      't2': '#d65b05',
+      'bn': '#ea9900',
     },
     'europe':{
       'name': 'Europe',
       'selector': '#europe',
       'mselector': '#m-europe',
       'color': '#006666',
+      't1': '#00544e',
+      't2': '#004253',
+      'bn': '#00453c',
     },
     'africa':{
       'name': 'Africa',
       'selector': '#africa',
       'mselector': '#m-africa',
       'color': '#993300',
+      't1': '#8c2a00',
+      't2': '#6d2100',
+      'bn': '#802200',
     },
     'australia':{
       'name': 'Australia',
       'selector': '#australia',
       'mselector': '#m-australia',
       'color': '#669900',
+      't1': '#5d7d00',
+      't2': '#496400',
+      'bn': '#556600',
     },
     'north-america':{
       'name': 'North America',
       'selector': '#north-america',
       'mselector': '#m-north-america',
       'color': '#3366cc',
+      't1': '#2e549b',
+      't2': '#2442a5',
+      'bn': '#2a4576',
     },
     'south-america':{
       'name': 'South America',
       'selector': '#south-america',
       'mselector': '#m-south-america',
       'color': '#666699',
+      't1': '#5d5474',
+      't2': '#49427c',
+      'bn': '#7b7baa',
     },
     'middle-east':{
       'name': 'Middle East',
       'selector': '#middle-east',
       'mselector': '#m-middle-east',
-      'color': '#cc9966',
+      'color': '#CC9966',
+      't1': '#ba7d4e',
+      't2': '#b07344',
+      'bn': '#d3944e',
     }
   };
 
@@ -143,8 +164,15 @@ function populateMobile(){
       start_year = start_year.split('-');
       //console.log(start_year);
 
+      var tn = this.gsx$leader.$t;
+      tn = tn.split(' ');
+      tnz = '<span style="font-weight:800;">' + tn[tn.length - 1] + '</span>';
+      tn[tn.length - 1] = tnz;
+      boo = tn.join();
+      boo = boo.replace(',','');
+
       clone = {
-        'name' : this.gsx$leader.$t,
+        'name' : boo,
         'designation': this.gsx$designation.$t,
         'tenure': this.gsx$tenure.$t,
         'region': regions[this.gsx$region.$t],
@@ -170,8 +198,36 @@ function populateMobile(){
       // append leader to respective region
       $(leaders[i].region.mselector + ' .m-items .m-scroll').append('<div class="m-item"><a class="modal-trigger" href="#" data-toggle="modal" data-target="#modal-leader'+i+'"><img style="width:100%; border-radius:100px;" src="assets/img/'+leaders[i].image+'"/></a></div>');
       
+      var la, ra, lever;
 
-      $('#leader-modal-container').append('<div id="m-leader-'+i+'" class="m-leader"><div class="modal fade" id="modal-leader'+i+'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"><div class="modal-dialog" role="document"><div class="modal-content" style="background:#CC6600;"><div class="triangle1"></div><div class="triangle2">&nbsp;</div><div class="modal-body"><nav id="head2" class="navbar nav-top navbar-default navbar-fixed-top shrink"><div class="container-fluid"><div class="navbar-header"><a style="left: 75px;" class="navbar-brand navbar-brand-centered" href="http://aljazeera.com" target="_blank"><img alt="Al Jazeera" width="100" height="auto" src="assets/img/aj-logo.jpg"></a></div><div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"></div></div></nav><button type="button" class="close" data-dismiss="modal" style="margin-top:20px;position: absolute;left: 100vw;margin-left: -30px;">&times;</button><div class="m-image" style=""><img style="" src="assets/img/'+leaders[i].image+'"/></div><div class="m-tc"><div class="m-title" style="">Women leaders around the world</div></div><h1 class="m-name" style="">'+leaders[i].name+'</h1><h2 class="m-designation" style="">'+leaders[i].designation+'</h2><div class="m-tenure" style="">'+leaders[i].tenure.replaceAll(',','<br/>')+'</div><div class="m-info" style=""><p>'+leaders[i].info+'</p></div></div></div></div></div></div>');
+      if(i == 0)
+      {
+        la = '';
+        ra = '<a class="modal-trigger" data-dismiss="modal" href="#" data-toggle="modal" data-target="#modal-leader'+(i+1)+'"><div class="ra"><img style="border:5px solid '+leaders[i+1].region.bn+'" src="assets/img/'+leaders[i+1].image+'"/></div></a>';
+        lever = '';
+      }
+
+      else if(i == leaders.length - 1)
+      {
+        la = '<a class="modal-trigger" data-dismiss="modal" href="#" data-toggle="modal" data-target="#modal-leader'+(i-1)+'"><div class="la"><img style="border:5px solid '+leaders[i-1].region.bn+'" src="assets/img/'+leaders[i-1].image+'"/></div></a>';
+        ra = '';
+        lever = '';
+      }
+
+      else{
+
+        var la = '<a class="modal-trigger" data-dismiss="modal" href="#" data-toggle="modal" data-target="#modal-leader'+(i-1)+'"><div class="la"><img style="border:5px solid '+leaders[i-1].region.bn+'" src="assets/img/'+leaders[i-1].image+'"/></div></a>';
+        var ra = '<a class="modal-trigger" data-dismiss="modal" href="#" data-toggle="modal" data-target="#modal-leader'+(i+1)+'"><div class="ra"><img style="border:5px solid '+leaders[i+1].region.bn+'" src="assets/img/'+leaders[i+1].image+'"/></div></a>';
+        var lever = '<div class="lever" style="background:'+leaders[i].region.bn+'">&nbsp;</div>';
+
+      }
+
+      
+      
+
+
+
+      $('#leader-modal-container').append('<div id="m-leader-'+i+'" class="m-leader"><div class="modal fade" id="modal-leader'+i+'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"><div class="modal-dialog" role="document"><div class="modal-content" style="background:'+leaders[i].region.color+';"><div class="bottom_bar"><a href="#" data-dismiss="modal" aria-label="Close"><div class="cm"><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span></div></a><div class="cr">@AJLABS <img src="assets/img/aj-logo-cred.png"/></div></div><div class="triangle1" style="border-left: 100vw solid ' + leaders[i].region.t1 + ';"></div><div class="triangle2" style="border-bottom: 50vh solid '+ leaders[i].region.t2 + ';">&nbsp;</div>'+la + ra + lever +'<div class="modal-body"><nav id="head2" class="navbar nav-top navbar-default navbar-fixed-top shrink"><div class="container-fluid"><div class="navbar-header"><a style="left: 75px;" class="navbar-brand navbar-brand-centered" href="http://aljazeera.com" target="_blank"><img alt="Al Jazeera" width="100" height="auto" src="assets/img/aj-logo.jpg"></a></div><div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"></div></div></nav><button type="button" class="close" data-dismiss="modal" style="margin-top:20px;position: absolute;left: 100vw;margin-left: -30px;">&times;</button><div class="m-image" style=""><img style="border:5px solid '+leaders[i].region.color+'" src="assets/img/'+leaders[i].image+'"/></div><div class="m-tc"><div class="m-title" style="">Women leaders around the world</div></div><h1 class="m-name" style="">'+leaders[i].name+'</h1><h2 class="m-designation" style="">'+leaders[i].designation+'</h2><div class="m-tenure" style="background:'+leaders[i].region.bn+'">'+leaders[i].tenure.replaceAll(',','<br/>')+'</div><div class="m-info" style=""><p>'+leaders[i].info+'</p></div></div></div></div></div></div>');
 
 
 
@@ -233,9 +289,7 @@ $(document).ready(function(){
 
   populateDesktop();
   resizeMobile();
-  populateMobile();
-
-  
+  populateMobile(); 
 
 });
 /* */
@@ -284,4 +338,67 @@ $('.modal-trigger').on("click", function(){
         $('.modal:visible').each(reposition);
     });
 
+function fetchData(){
+
+  console.log('fetchData() invoked');
+
+  var leaders = [];
+  var apiEndpoint = 'https://spreadsheets.google.com/feeds/list/1K3W6IO4vqRljer3XDHAvrt6xSxz3d4dwnXVvdZ339i0/od6/public/values?alt=json';
+  var entry;
+  var clone;
+  
+  var request = new XMLHttpRequest();
+  request.open('GET', apiEndpoint, true);
+
+  request.onload = function() {
+    if (request.status >= 200 && request.status < 400) {
+      // Success!
+      var data = JSON.parse(request.responseText);
+      data = data.feed.entry;
+
+      for (var i = 0; i < data.length; i++) {
+        
+        start_year = data[i].gsx$tenure.$t;
+        start_year.replace('–', '-');
+        start_year = start_year.split('-');
+
+        clone = {
+          'name' : data[i].gsx$leader.$t,
+          'designation': data[i].gsx$designation.$t,
+          'tenure': data[i].gsx$tenure.$t,
+          'region': regions[data[i].gsx$region.$t],
+          'image': (data[i].gsx$image.$t == '') ? 'leaders/no-avatar.png' : 'leaders/'+data[i].gsx$image.$t,
+          'start_year': start_year[0],
+        }
+
+        leaders.push(clone);
+
+      }
+
+      console.log('fetchData() executed');
+      return leaders;
+
+
+
+      
+    } else {
+      // We reached our target server, but it returned an error
+      console.log('fetchData() - Error occured while fetching data');
+
+    }
+  };
+
+  request.onerror = function() {
+    // There was a connection error of some sort
+  };
+
+  request.send();
+
+}
+var boo = fetchData();
+$.when(boo).then(function(data){
+
+  console.log(data);
+
+})
 
