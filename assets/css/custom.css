@@ -173,7 +173,7 @@ nav.navbar {
 .m-leader .m-tenure{margin:10px 0 15px 0;color:#fff; font-weight:500; background:#ea9900;  margin-left: -25px;padding:10px 0 10px 25px; font-size:16px;}
 
 .m-leader .m-info{color:#fff; font-size:16px; font-weight:400; padding-right: 185px;overflow: scroll;line-height:22px;    padding-bottom: 20px;
-    min-height: 18vh;z-index: 20;
+    min-height: 25vh;z-index: 20;
     position: relative;}
 
 .modal-body{padding:25px 25px 15px 25px}
