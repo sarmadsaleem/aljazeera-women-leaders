@@ -1,9 +1,11 @@
+/* custom function for replaceAll */
 String.prototype.replaceAll = function(search, replacement) {
     var target = this;
     return target.split(search).join(replacement);
 };
+/* */
 
-/* data */
+/* region data containing name, selectors and hex codes */
 var regions = {
     'asia':{
       'name': 'Asia',
@@ -72,8 +74,6 @@ var regions = {
 
 /* populate desktop by fetching data and appending to respective region */
 function populateDesktop(){
-
-  destroyDesktop();
   
   var leaders = [];
   var apiEndpoint = 'https://spreadsheets.google.com/feeds/list/1K3W6IO4vqRljer3XDHAvrt6xSxz3d4dwnXVvdZ339i0/od6/public/values?alt=json';
@@ -88,10 +88,10 @@ function populateDesktop(){
     // push each entry object in leaders
     $(entry).each(function(){
 
+      // pluck start year for sorting purposes 
       start_year = this.gsx$tenure.$t;
       start_year.replace('–', '-');
       start_year = start_year.split('-');
-      //console.log(start_year);
 
       clone = {
         'name' : this.gsx$leader.$t,
@@ -113,28 +113,43 @@ function populateDesktop(){
 
     // iterate over fetched list
     for (var i = 0; i < leaders.length; i++) {
-
-      //console.log(leaders[i]);
       
       // append leader to respective region
-      $(leaders[i].region.selector + ' .body').append('<a style="color:#000" class="modal-trigger" href="#" data-toggle="modal" data-target="#modal-leader'+i+'"><div id="leader-'+i+'" class="leader"><div class="image"><img style="border:solid 5px ' + leaders[i].region.color + ';" src="assets/img/' + leaders[i].image + '"/></div><div class="text"><div class="tenure">'+ leaders[i].tenure + '</div><div class="name" style="border-bottom:5px solid '+leaders[i].region.color+';">'+ leaders[i].name +'</div><div class="designation" style="color:'+leaders[i].region.color+'">'+ leaders[i].designation +'</div></div></div></a>');
+      $('#desktop ' + leaders[i].region.selector + ' .body').append('<a style="color:#000" class="modal-trigger" href="#" data-toggle="modal" data-target="#modal-leader'+i+'"><div id="leader-'+i+'" class="leader"><div class="image"><img style="border:solid 5px ' + leaders[i].region.color + ';" src="assets/img/' + leaders[i].image + '"/></div><div class="text"><div class="tenure">'+ leaders[i].tenure + '</div><div class="name" style="border-bottom:5px solid '+leaders[i].region.color+';">'+ leaders[i].name +'</div><div class="designation" style="color:'+leaders[i].region.color+'">'+ leaders[i].designation +'</div></div></div></a>');
 
       // choose left or right positioning for text
-      if($(leaders[i].region.selector).position().left > ($(window).width() / 2))
+      if($('#desktop ' + leaders[i].region.selector).position().left > ($(window).width() / 2))
       {
-        $('#leader-'+i+' .text').css("left", "-"+($('#leader-'+i+' .text').width()-4)+"px");
+        $('#desktop #leader-'+i+' .text').css("left", "-"+($('#leader-'+i+' .text').width()-4)+"px");
       }
 
       // set leader positioning
       if(i > 0)
       {
-          $('#leader-'+i).css("top", ((leaders[i].region.selector == leaders[i-1].region.selector) ? ((($('#leader-'+(i-1)).position().top) + ($('#leader-'+(i-1)).innerHeight())) + 7) : ((($('#leader-'+(i-1)).position().top) + ($('#leader-'+(i-1)).innerHeight())) - 15))+"px");
+          var prev_top = $('#desktop div #leader-'+(i-1)).position().top;
+          // to avoid use imagesLoaded
+          var prev_height = $('#desktop div #leader-'+(i-1)).width();
+
+          //console.log('prev top: ' + prev_top);
+          //console.log('prev height: ' + prev_height);
+
+
+          $('#desktop #leader-'+i).css("top", (prev_top + prev_height)+5+"px");
+
       }
 
     }
 
     // set region height
-    $('.region .body').css('height', (($('#leader-'+(leaders.length - 1)).position().top+$('#leader-'+(leaders.length - 1)).innerHeight())-$(leaders[(leaders.length - 1)].region.selector).position().top)+'px');
+    //$('#desktop .region .body').css('height', (($('#leader-'+(leaders.length - 1)).position().top+$('#leader-'+(leaders.length - 1)).innerHeight())-$(leaders[(leaders.length - 1)].region.selector).position().top)+'px');
+    // set region height
+    var last_top = $("#desktop #leader-"+(leaders.length-1)).position().top;
+    // to avoid use imagesLoaded
+    var last_height = $("#desktop #leader-"+(leaders.length-1)).width();
+    var minus_height = $(leaders[leaders.length-1].region.selector).position().top;
+
+    $('#desktop .region .body').css('height', ((last_top + last_height)- minus_height)+'px');
+
 
   });
 
@@ -142,8 +157,8 @@ function populateDesktop(){
 }
 /* function end */
 
-/* populate desktop by fetching data and appending to respective region */
-function populateMobile(){
+/* populate mobile view by fetching data and appending to respective region - second rendition */
+function populateMobile2(){
   
   var leaders = [];
   var apiEndpoint = 'https://spreadsheets.google.com/feeds/list/1K3W6IO4vqRljer3XDHAvrt6xSxz3d4dwnXVvdZ339i0/od6/public/values?alt=json';
@@ -154,7 +169,6 @@ function populateMobile(){
 
     // fetch entry object from json response
     entry = data.feed.entry;
-    //console.log(entry);
 
     // push each entry object in leaders
     $(entry).each(function(){
@@ -162,8 +176,8 @@ function populateMobile(){
       start_year = this.gsx$tenure.$t;
       start_year.replace('–', '-');
       start_year = start_year.split('-');
-      //console.log(start_year);
 
+      /* style leader last name */
       var tn = this.gsx$leader.$t;
       tn = tn.split(' ');
       tnz = '<span style="font-weight:800;">' + tn[tn.length - 1] + '</span>';
@@ -172,13 +186,15 @@ function populateMobile(){
       boo = boo.replaceAll(',',' ');
 
       clone = {
-        'name' : boo,
+        'name' : this.gsx$leader.$t,
+        'name_m': boo,
         'designation': this.gsx$designation.$t,
         'tenure': this.gsx$tenure.$t,
         'region': regions[this.gsx$region.$t],
         'image': (this.gsx$image.$t == '') ? 'leaders/no-avatar.png' : 'leaders/'+this.gsx$image.$t,
         'start_year': start_year[0],
         'info': this.gsx$information.$t,
+
       }
 
       leaders.push(clone);
@@ -192,12 +208,26 @@ function populateMobile(){
 
     // iterate over fetched list
     for (var i = 0; i < leaders.length; i++) {
-
-      //console.log(leaders[i].region.mselector + ' .m-items .m-scroll');
       
       // append leader to respective region
-      $(leaders[i].region.mselector + ' .m-items .m-scroll').append('<div class="m-item"><a class="modal-trigger" href="#" data-toggle="modal" data-target="#modal-leader'+i+'"><img style="width:100%; border-radius:100px;" src="assets/img/'+leaders[i].image+'"/></a></div>');
-      
+      $('#mobile ' + leaders[i].region.mselector + ' .body').append('<a style="color:#000" class="modal-trigger" href="#" data-toggle="modal" data-target="#modal-leader'+i+'"><div id="m-leader-'+i+'" class="leader"><div class="image"><img style="border:solid 5px ' + leaders[i].region.color + ';" src="assets/img/' + leaders[i].image + '"/></div></div></a>');
+
+      // set leader positioning
+      if(i > 0)
+      {
+          var prev_top = $('#mobile div #m-leader-'+(i-1)).position().top;
+          // to avoid use imagesLoaded
+          var prev_height = $('#mobile div #m-leader-'+(i-1)).width();
+
+          //console.log('prev_top': + prev_top);
+          //console.log('prev height: ' + prev_height);
+
+          $('#mobile #m-leader-'+i).css("top", (prev_top + prev_height)+5+"px");
+      }
+
+      // append modal boxes
+      // la = left avatar on each modal
+      // ra = right avatar on each modal
       var la, ra, lever;
 
       if(i == 0)
@@ -222,18 +252,18 @@ function populateMobile(){
 
       }
 
+      // bottom bar
       var bb = '<div class="bottom_bar"><a class="close-trigger" href="#" data-dismiss="modal" aria-label="Close"><div class="cm"><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span></div></a><div class="cr">@AJLABS <img src="assets/img/aj-logo-cred.png"/></div></div>';
-
-      
-      
-
-
-
+      // consolidate and append modal
       $('#leader-modal-container').append('<div id="m-leader-'+i+'" class="m-leader"><div class="modal fade" id="modal-leader'+i+'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"><div class="modal-dialog" role="document"><div class="modal-content" style="background:'+leaders[i].region.color+';"><div class="triangle1" style="border-left: 100vw solid ' + leaders[i].region.t1 + ';"></div><div class="triangle2" style="border-bottom: 50vh solid '+ leaders[i].region.t2 + ';">&nbsp;</div><div class="modal-body"><nav id="head2" class="navbar nav-top navbar-default navbar-fixed-top shrink"><div class="container-fluid"><div class="navbar-header"><a style="left: 75px;" class="navbar-brand navbar-brand-centered" href="http://aljazeera.com" target="_blank"><img alt="Al Jazeera" width="100" height="auto" src="assets/img/aj-logo.jpg"></a></div><div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"></div></div></nav><button type="button" class="close close-trigger" data-dismiss="modal" style="margin-top:20px;position: absolute;left: 100vw;margin-left: -30px;">&times;</button><div class="m-image" style=""><img style="border:5px solid '+leaders[i].region.color+'" src="assets/img/'+leaders[i].image+'"/></div><div class="m-tc"><div class="m-title" style="">Women leaders around the world</div></div><h1 class="m-name" style="">'+leaders[i].name+'</h1><h2 class="m-designation" style="">'+leaders[i].designation+'</h2><div class="m-tenure" style="background:'+leaders[i].region.bn+'">'+leaders[i].tenure.replaceAll(',','<br/>')+'</div><div class="m-info" style=""><p>'+leaders[i].info+'</p></div>'+la + ra + lever + '</div>'+bb+'</div></div></div></div>');
 
-
-
     }
+
+    // set region height
+    var last_top = $("#mobile #m-leader-"+(leaders.length-1)).position().top;
+    var last_height = $("#mobile #m-leader-"+(leaders.length-1)).width();
+    var minus_height = $(leaders[leaders.length-1].region.mselector).position().top;
+    $('#mobile .region .body').css('height', ((last_top + last_height)- minus_height)+'px');
 
   });
 
@@ -241,46 +271,159 @@ function populateMobile(){
 }
 /* function end */
 
-/* */
-function destroyDesktop(){
 
-  $( ".leader" ).each(function(index){
-
-    $(this).remove();
-
-  });
-
-  $( ".region .body" ).each(function(index){
-
-    $(this).empty();
-
-  });
-
+/* first rendition for mobile view */
+// function populateMobile(){
   
+//   var leaders = [];
+//   var apiEndpoint = 'https://spreadsheets.google.com/feeds/list/1K3W6IO4vqRljer3XDHAvrt6xSxz3d4dwnXVvdZ339i0/od6/public/values?alt=json';
+//   var entry;
+//   var clone;
 
-  $('.region .body').css('height', 'auto');
+//   $.getJSON(apiEndpoint, function(data) {
 
-  console.log('destroyDesktop executed');
+//     // fetch entry object from json response
+//     entry = data.feed.entry;
+//     //console.log(entry);
 
-}
+//     // push each entry object in leaders
+//     $(entry).each(function(){
+
+//       start_year = this.gsx$tenure.$t;
+//       start_year.replace('–', '-');
+//       start_year = start_year.split('-');
+//       //console.log(start_year);
+
+//       var tn = this.gsx$leader.$t;
+//       tn = tn.split(' ');
+//       tnz = '<span style="font-weight:800;">' + tn[tn.length - 1] + '</span>';
+//       tn[tn.length - 1] = tnz;
+//       boo = tn.join();
+//       boo = boo.replaceAll(',',' ');
+
+//       clone = {
+//         'name' : boo,
+//         'designation': this.gsx$designation.$t,
+//         'tenure': this.gsx$tenure.$t,
+//         'region': regions[this.gsx$region.$t],
+//         'image': (this.gsx$image.$t == '') ? 'leaders/no-avatar.png' : 'leaders/'+this.gsx$image.$t,
+//         'start_year': start_year[0],
+//         'info': this.gsx$information.$t,
+//       }
+
+//       leaders.push(clone);
+
+//     });
+
+//   }).done(function(){
+
+//     // sort leaders based on start_year
+//     leaders = leaders.sort(function(a,b){return a.start_year - b.start_year});
+
+//     // iterate over fetched list
+//     for (var i = 0; i < leaders.length; i++) {
+
+//       //console.log(leaders[i].region.mselector + ' .m-items .m-scroll');
+      
+//       // append leader to respective region
+//       $(leaders[i].region.mselector + ' .m-items .m-scroll').append('<div class="m-item"><a class="modal-trigger" href="#" data-toggle="modal" data-target="#modal-leader'+i+'"><img style="width:100%; border-radius:100px;" src="assets/img/'+leaders[i].image+'"/></a></div>');
+      
+//       var la, ra, lever;
+
+//       if(i == 0)
+//       {
+//         la = '<div class="la" style="visibility:hidden;"><img style="border:5px solid " src="assets/img/leaders/no-avatar.png"/></div>';
+//         ra = '<a class="modal-trigger pull-right" data-dismiss="modal" href="#" data-toggle="modal" data-target="#modal-leader'+(i+1)+'"><div class="ra"><img style="border:5px solid '+leaders[i+1].region.bn+'" src="assets/img/'+leaders[i+1].image+'"/></div></a>';
+//         lever = '';
+//       }
+
+//       else if(i == leaders.length - 1)
+//       {
+//         la = '<a class="modal-trigger" data-dismiss="modal" href="#" data-toggle="modal" data-target="#modal-leader'+(i-1)+'"><div class="la"><img style="border:5px solid '+leaders[i-1].region.bn+'" src="assets/img/'+leaders[i-1].image+'"/></div></a>';
+//         ra = '';
+//         lever = '';
+//       }
+
+//       else{
+
+//         var la = '<a class="modal-trigger" data-dismiss="modal" href="#" data-toggle="modal" data-target="#modal-leader'+(i-1)+'"><div class="la"><img style="border:5px solid '+leaders[i-1].region.bn+'" src="assets/img/'+leaders[i-1].image+'"/></div></a>';
+//         var ra = '<a class="modal-trigger pull-right" data-dismiss="modal" href="#" data-toggle="modal" data-target="#modal-leader'+(i+1)+'"><div class="ra"><img style="border:5px solid '+leaders[i+1].region.bn+'" src="assets/img/'+leaders[i+1].image+'"/></div></a>';
+//         var lever = '<div class="lever" style="background:'+leaders[i].region.bn+'">&nbsp;</div>';
+
+//       }
+
+//       var bb = '<div class="bottom_bar"><a class="close-trigger" href="#" data-dismiss="modal" aria-label="Close"><div class="cm"><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span></div></a><div class="cr">@AJLABS <img src="assets/img/aj-logo-cred.png"/></div></div>';
+
+      
+      
+
+
+
+//       $('#leader-modal-container').append('<div id="m-leader-'+i+'" class="m-leader"><div class="modal fade" id="modal-leader'+i+'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"><div class="modal-dialog" role="document"><div class="modal-content" style="background:'+leaders[i].region.color+';"><div class="triangle1" style="border-left: 100vw solid ' + leaders[i].region.t1 + ';"></div><div class="triangle2" style="border-bottom: 50vh solid '+ leaders[i].region.t2 + ';">&nbsp;</div><div class="modal-body"><nav id="head2" class="navbar nav-top navbar-default navbar-fixed-top shrink"><div class="container-fluid"><div class="navbar-header"><a style="left: 75px;" class="navbar-brand navbar-brand-centered" href="http://aljazeera.com" target="_blank"><img alt="Al Jazeera" width="100" height="auto" src="assets/img/aj-logo.jpg"></a></div><div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"></div></div></nav><button type="button" class="close close-trigger" data-dismiss="modal" style="margin-top:20px;position: absolute;left: 100vw;margin-left: -30px;">&times;</button><div class="m-image" style=""><img style="border:5px solid '+leaders[i].region.color+'" src="assets/img/'+leaders[i].image+'"/></div><div class="m-tc"><div class="m-title" style="">Women leaders around the world</div></div><h1 class="m-name" style="">'+leaders[i].name+'</h1><h2 class="m-designation" style="">'+leaders[i].designation+'</h2><div class="m-tenure" style="background:'+leaders[i].region.bn+'">'+leaders[i].tenure.replaceAll(',','<br/>')+'</div><div class="m-info" style=""><p>'+leaders[i].info+'</p></div>'+la + ra + lever + '</div>'+bb+'</div></div></div></div>');
+
+
+
+//     }
+
+//   });
+
+//   console.log('populateMobile executed');
+// }
+/* function end */
+
 /* */
 
 /* */
-function resizeMobile(){
+function positionLeaders(){
 
-  $.each(regions, function(index,value){
-    boo = (100 - (($(value.mselector + ' .m-title').width() / $(value.mselector).width())*100))-5;
-    $(value.mselector + ' .m-items').css('width', boo+'%');
+  // fetch leaders in mobile view and position based on order
+  var mobile_leaders = $('#mobile .leader');
+  mobile_leaders.each(function(i, obj) {
+
+    if(i > 0)
+    {
+        var prev_top = $('#mobile div #m-leader-'+(i-1)).position().top;
+        // to avoid use imagesLoaded
+        var prev_height = $('#mobile div #m-leader-'+(i-1)).width();
+        $('#mobile #m-leader-'+i).css("top", (prev_top + prev_height)+5+"px");
+    }
+
   });
+
+  // adjust region body height
+  var last_top = $("#mobile #m-leader-"+(mobile_leaders.length-1)).position().top;
+  var last_height = $("#mobile #m-leader-"+(mobile_leaders.length-1)).width();
+  $('#mobile .region .body').css('height', ((last_top + last_height))+'px');
+
+
+  // fetch leaders in desktop view and position based on order
+  var desktop_leaders = $('#desktop .leader');
+  desktop_leaders.each(function(i, obj) {
+
+    if(i > 0)
+    {
+        var prev_top = $('#desktop div #leader-'+(i-1)).position().top;
+        // to avoid use imagesLoaded
+        var prev_height = $('#desktop div #leader-'+(i-1)).width();
+        $('#desktop #leader-'+i).css("top", (prev_top + prev_height)+5+"px");
+
+    }
+
+  });
+
+  // adjust region body height
+  var last_top = $("#desktop #leader-"+(desktop_leaders.length-1)).position().top;
+  var last_height = $("#desktop #leader-"+(desktop_leaders.length-1)).width();
+  $('#desktop .region .body').css('height', ((last_top + last_height))+'px');
+
+  console.log('positionLeaders executed');
 }
 /* */
 
 /* */
 $(window).resize(function(){
 
-    populateDesktop();
-    resizeMobile();
-  
+    positionLeaders();
   
 });
 /* */
@@ -290,14 +433,16 @@ $(window).resize(function(){
 $(document).ready(function(){
 
   populateDesktop();
-  resizeMobile();
-  populateMobile(); 
+  populateMobile2(); 
+
+  $('.modal-trigger').on("click", function(){console.log('modal triggered');$("body").addClass("modal-open")});
+  $('.close-trigger').on("click", function(){console.log('close triggered');$("body").removeClass("modal-open")});
 
 });
 /* */
 
 
-/* shrink */
+/* shrink logo - copied from previous interactives */
 $(window).scroll(function() {
   if ($(document).scrollTop() > 50) {
     $('#head').addClass('shrink');
@@ -309,47 +454,30 @@ $(window).scroll(function() {
 });
 /* shrink end */
 
-/**
- * Vertically center Bootstrap 3 modals so they aren't always stuck at the top
- */
 
+/* vertically center modal */
 $('.modal-trigger').on("click", function(){
-    // Reposition when a modal is shown
-    $('.modal').on('show.bs.modal', reposition);
-    // Reposition when the window is resized
-    $(window).on('resize', function() {
-        $('.modal:visible').each(reposition);
-    });
 
-})
+  // Reposition when a modal is shown
+  $('.modal').on('show.bs.modal', reposition);
+  // Reposition when the window is resized
+  $(window).on('resize', function() {
+      $('.modal:visible').each(reposition);
+  });
 
+});
+/* */
 
-    function reposition() {
-        var modal = $(this),
-            dialog = modal.find('.modal-dialog');
-        modal.css('display', 'block');
-        
-        // Dividing by two centers the modal exactly, but dividing by three 
-        // or four works better for larger screens.
-        dialog.css("margin-top", Math.max(0, ($(window).height() - dialog.height()) / 2));
-    }
-    // Reposition when a modal is shown
-    $('.modal').on('show.bs.modal', reposition);
-    // Reposition when the window is resized
-    $(window).on('resize', function() {
-        $('.modal:visible').each(reposition);
-    });
-
-
-//$('modal-trigger').on("click", function(){$("body").addClass("modal-open")});
-//$('close-trigger').on("click", function(){$("body").removeClass("modal-open")});
-
-
-// $(".modal").on("show", function () {
-//   $("body").addClass("modal-open");
-// }).on("hidden", function () {
-//   $("body").removeClass("modal-open")
-// });
+/* vertically center modal - reposition */
+function reposition() {
+  var modal = $(this),
+      dialog = modal.find('.modal-dialog');
+  modal.css('display', 'block');
+  
+  // Dividing by two centers the modal exactly, but dividing by three 
+  // or four works better for larger screens.
+  dialog.css("margin-top", Math.max(0, ($(window).height() - dialog.height()) / 2));
+}
 
 
 

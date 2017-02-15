@@ -67,13 +67,37 @@ nav.navbar {
 .region .title{text-transform: uppercase; text-align:center; color:#666666; font-weight: 900; font-size:14px; padding:3px; }
 .region .body{background: #EFEFEF; min-height: 500px; padding-top:15px; height:auto;}
 
-#asia .body{border-top: 5px solid #cc6600;}
-#europe .body{border-top: 5px solid #006666;}
-#africa .body{border-top: 5px solid #993300;}
-#australia .body{border-top: 5px solid #669900;}
-#north-america .body{border-top: 5px solid #3366cc;}
-#south-america .body{border-top: 5px solid #666699;}
-#middle-east .body{border-top: 5px solid #cc9966;}
+#desktop #asia .body{border-top: 5px solid #cc6600;}
+#desktop #europe .body{border-top: 5px solid #006666;}
+#desktop #africa .body{border-top: 5px solid #993300;}
+#desktop #australia .body{border-top: 5px solid #669900;}
+#desktop #north-america .body{border-top: 5px solid #3366cc;}
+#desktop #south-america .body{border-top: 5px solid #666699;}
+#desktop #middle-east .body{border-top: 5px solid #cc9966;}
+
+#mobile #asia{background:#cc6600;}
+#mobile #europe{background:#006666;}
+#mobile #africa{background:#993300;}
+#mobile #australia{background:#669900;}
+#mobile #north-america{background:#3366cc;}
+#mobile #south-america{background:#666699;}
+#mobile #middle-east{background:#cc9966;}
+#mobile .region{margin:0;float:left; width: 14.2%}
+#mobile .region .title{white-space: nowrap;text-align: left; color:#ccc; margin-top:45%;}
+#mobile .region .body{background:transparent;}
+
+.rotate {
+
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
+#mobile .leader{width:11% !important; margin:0; margin-left:1.64%;border:0 !important; height: auto;}
+#mobile .leader .image img{border:0 !important;}
+#mobile .leader .text{display: none;}
 
 .aisa{color:#cc6600;}
 .europe{color:#006666;}
@@ -354,7 +378,7 @@ footer{margin-top:0px;}
     .modal-body{}
 
     .close{position: relative !important;
-    margin-top:0 !important; left:0 !important;}
+    margin-top:0 !important; left:0 !important; z-index:20;}
 
     .ra{margin-top:-75px;}
     .la{margin-top:-75px;}
