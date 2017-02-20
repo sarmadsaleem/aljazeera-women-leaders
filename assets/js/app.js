@@ -6,7 +6,7 @@ String.prototype.replaceAll = function(search, replacement) {
 /* */
 
 /* region data containing name, selectors and hex codes */
-var regions = {
+var region = {
     'asia':{
       'name': 'Asia',
       'selector': '#asia',
@@ -93,11 +93,15 @@ function populateDesktop(){
       start_year.replace('–', '-');
       start_year = start_year.split('-');
 
+      transformed_region = this.gsx$region.$t;
+      transformed_region = transformed_region.toLowerCase();
+      transformed_region = transformed_region.replaceAll(' ', '-');
+
       clone = {
         'name' : this.gsx$leader.$t,
         'designation': this.gsx$designation.$t,
         'tenure': this.gsx$tenure.$t,
-        'region': regions[this.gsx$region.$t],
+        'region': region[transformed_region],
         'image': (this.gsx$image.$t == '') ? 'leaders/no-avatar.png' : 'leaders/'+this.gsx$image.$t,
         'start_year': start_year[0],
       }
@@ -110,10 +114,14 @@ function populateDesktop(){
 
     // sort leaders based on start_year
     leaders = leaders.sort(function(a,b){return a.start_year - b.start_year});
+    
+    //console.log('leaders');
+    //console.log(leaders);
 
     // iterate over fetched list
     for (var i = 0; i < leaders.length; i++) {
       
+      //console.log('region '  + leaders[i].region.selector)
       // append leader to respective region
       $('#desktop ' + leaders[i].region.selector + ' .body').append('<a style="color:#000" class="modal-trigger" href="#" data-toggle="modal" data-target="#modal-leader'+i+'"><div id="leader-'+i+'" class="leader"><div class="image"><img style="border:solid 5px ' + leaders[i].region.color + ';" src="assets/img/' + leaders[i].image + '"/></div><div class="text"><div class="tenure">'+ leaders[i].tenure + '</div><div class="name" style="border-bottom:5px solid '+leaders[i].region.color+';">'+ leaders[i].name +'</div><div class="designation" style="color:'+leaders[i].region.color+'">'+ leaders[i].designation +'</div></div></div></a>');
 
@@ -177,6 +185,10 @@ function populateMobile2(){
       start_year.replace('–', '-');
       start_year = start_year.split('-');
 
+      transformed_region = this.gsx$region.$t;
+      transformed_region = transformed_region.toLowerCase();
+      transformed_region = transformed_region.replaceAll(' ', '-');
+
       /* style leader last name */
       var tn = this.gsx$leader.$t;
       tn = tn.split(' ');
@@ -190,7 +202,7 @@ function populateMobile2(){
         'name_m': boo,
         'designation': this.gsx$designation.$t,
         'tenure': this.gsx$tenure.$t,
-        'region': regions[this.gsx$region.$t],
+        'region': region[transformed_region],
         'image': (this.gsx$image.$t == '') ? 'leaders/no-avatar.png' : 'leaders/'+this.gsx$image.$t,
         'start_year': start_year[0],
         'info': this.gsx$information.$t,
@@ -305,7 +317,7 @@ function populateMobile2(){
 //         'name' : boo,
 //         'designation': this.gsx$designation.$t,
 //         'tenure': this.gsx$tenure.$t,
-//         'region': regions[this.gsx$region.$t],
+//         'region': region[this.gsx$region.$t],
 //         'image': (this.gsx$image.$t == '') ? 'leaders/no-avatar.png' : 'leaders/'+this.gsx$image.$t,
 //         'start_year': start_year[0],
 //         'info': this.gsx$information.$t,
