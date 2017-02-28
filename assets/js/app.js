@@ -15,6 +15,7 @@ var region = {
       't1': '#de8200',
       't2': '#d65b05',
       'bn': '#ea9900',
+      'rtc': '63px',
     },
     'europe':{
       'name': 'Europe',
@@ -24,6 +25,7 @@ var region = {
       't1': '#00544e',
       't2': '#004253',
       'bn': '#00453c',
+      'rtc': '85px',
     },
     'africa':{
       'name': 'Africa',
@@ -33,6 +35,7 @@ var region = {
       't1': '#8c2a00',
       't2': '#6d2100',
       'bn': '#802200',
+      'rtc': '80px',
     },
     'australia':{
       'name': 'Australia',
@@ -42,6 +45,7 @@ var region = {
       't1': '#5d7d00',
       't2': '#496400',
       'bn': '#556600',
+      'rtc': '107px',
     },
     'north-america':{
       'name': 'North America',
@@ -51,6 +55,7 @@ var region = {
       't1': '#2e549b',
       't2': '#2442a5',
       'bn': '#2a4576',
+      'rtc': '147px',
     },
     'south-america':{
       'name': 'South America',
@@ -60,6 +65,7 @@ var region = {
       't1': '#5d5474',
       't2': '#49427c',
       'bn': '#7b7baa',
+      'rtc': '147px',
     },
     'middle-east':{
       'name': 'Middle East',
@@ -69,6 +75,7 @@ var region = {
       't1': '#ba7d4e',
       't2': '#b07344',
       'bn': '#d3944e',
+      'rtc': '123px',
     }
 };
 /* region end */
@@ -396,9 +403,11 @@ $(document).ready(function(){
   $('.modal-trigger').on("click", function(){console.log('modal triggered');$("body").addClass("modal-open")});
   $('.close-trigger').on("click", function(){console.log('close triggered');$("body").removeClass("modal-open")});
 
+  $.each(region, function(index, value){
 
+    $(value.mselector + ' .rtc').css({'height' : value.rtc, 'background' : value.color});
 
-
+  });
 
 });
 /* documentReady end */
@@ -418,19 +427,24 @@ $(window).scroll(function() {
   /* sticky continent titles */
   if(($(document).scrollTop() > ($('#tcon').height() + 75)) && ($(document).scrollTop() < ($('#mobile').height() + ($('#tcon').height() - 10))))
   {
-    var mrw = $('#mobile .region').width() - 26;
-    $('#mobile .region .title').css('margin-left', (mrw/2)).addClass('stick').removeClass('rotate');
-    
+    //var mrw = $('#mobile .region').width() - 26;
+    $('#mobile .region .rtc').addClass('stick');
+    $('#mobile .region .rtc').width($('#mobile .region').width());
+
+
+    $.each(region, function(index, value){
+
+      $(value.mselector + ' .rtc').css({'height' : value.rtc+100, 'background' : value.color});
+
+    });
+ 
   }
   else{
-    $('#mobile .region .title').css('margin-left', 0).removeClass('stick').addClass('rotate');
+    $('#mobile .region .rtc').removeClass('stick');
   }
 
   /* years */
   //$('#years').css('top', $('#tcon').height() + 150);
-
-
-  //console.log($('#mobile .leader').position());
 
 });
 /* shrink end */

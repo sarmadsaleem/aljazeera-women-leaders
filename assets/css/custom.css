@@ -83,7 +83,9 @@ nav.navbar {
 #mobile #south-america{background:#666699;}
 #mobile #middle-east{background:#cc9966;}
 #mobile .region{margin:0;float:left; width: 14.2%}
-#mobile .region .title{white-space: nowrap;text-align: left; color:#ccc; margin-top:45%;}
+#mobile .region .title{white-space: nowrap;text-align: left; color:#ccc; /*margin-top:45%;*/}
+#mobile .region .rtc{padding-top:45%;}
+
 #mobile .region .body{background:transparent;}
 
 .rotate {
@@ -93,7 +95,15 @@ nav.navbar {
     -ms-transform: rotate(90deg);
     -o-transform: rotate(90deg);
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+
+      -webkit-transform-origin: 50% 50%;
+  -moz-transform-origin: 50% 50%;
+  -ms-transform-origin: 50% 50%;
+  -o-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
 }
+
+
 
 #mobile .leader{width:11% !important; margin:0; margin-left:1.64%;border:0 !important; height: auto;}
 #mobile .leader .image img{border:0 !important;}
@@ -418,10 +428,10 @@ body.modal-open {
 
 .stick {
     margin-top: 0 !important;
+    padding-top:40px !important;
     position: fixed !important;
-    top: 12px;
-    transform: rotate(90deg);
-    transform-origin: 0 100%;
+    top:25px;
+    z-index:100;
 }
 
 #years{
