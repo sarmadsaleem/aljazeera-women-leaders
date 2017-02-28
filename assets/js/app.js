@@ -242,6 +242,12 @@ function populateMobile(){
       $('#mobile ' + leaders[i].region.mselector + ' .body').append('<a style="color:#000" class="modal-trigger" href="#" data-toggle="modal" data-target="#modal-leader'+i+'"><div id="m-leader-'+i+'" class="leader"><div class="image"><img style="border:solid 5px ' + leaders[i].region.color + ';" src="assets/img/' + leaders[i].image + '"/></div></div></a>');
 
       // set leader positioning
+      if(i == 0)
+      {
+        $('#mobile #m-leader-'+i).css("top", ($('#mobile div #m-leader-'+(i)).position().top)+5+"px");
+      }
+
+
       if(i > 0)
       {
           var prev_top = $('#mobile div #m-leader-'+(i-1)).position().top;
@@ -328,6 +334,11 @@ function positionLeaders(){
   var mobile_leaders = $('#mobile .leader');
   mobile_leaders.each(function(i, obj) {
 
+    if(i == 0)
+    {
+      $('#mobile #m-leader-'+i).css("top", ($('#mobile div #m-leader-'+(i)).position().top)+5+"px");
+    }
+
     if(i > 0)
     {
         var prev_top = $('#mobile div #m-leader-'+(i-1)).position().top;
@@ -387,6 +398,8 @@ $(document).ready(function(){
 
 
 
+
+
 });
 /* documentReady end */
 
@@ -405,17 +418,19 @@ $(window).scroll(function() {
   /* sticky continent titles */
   if(($(document).scrollTop() > ($('#tcon').height() + 75)) && ($(document).scrollTop() < ($('#mobile').height() + ($('#tcon').height() - 10))))
   {
-    console.log('condition true');
-
     var mrw = $('#mobile .region').width() - 26;
     $('#mobile .region .title').css('margin-left', (mrw/2)).addClass('stick').removeClass('rotate');
     
   }
   else{
-  
-    console.log('condition false');
     $('#mobile .region .title').css('margin-left', 0).removeClass('stick').addClass('rotate');
   }
+
+  /* years */
+  //$('#years').css('top', $('#tcon').height() + 150);
+
+
+  //console.log($('#mobile .leader').position());
 
 });
 /* shrink end */
