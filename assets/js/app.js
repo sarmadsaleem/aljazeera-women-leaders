@@ -434,13 +434,18 @@ $(window).scroll(function() {
 
     $.each(region, function(index, value){
 
-      $(value.mselector + ' .rtc').css({'height' : value.rtc+100, 'background' : value.color});
+      $(value.mselector + ' .rtc').css({'height' : value.rtc+120});
 
     });
  
   }
   else{
     $('#mobile .region .rtc').removeClass('stick');
+    $.each(region, function(index, value){
+
+      $(value.mselector + ' .rtc').css({'height' : value.rtc});
+
+    });
   }
 
   /* years */
