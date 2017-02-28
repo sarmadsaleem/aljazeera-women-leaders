@@ -298,7 +298,7 @@ function populateMobile(){
     allMods.each(function(i, el) {
       var el = $(el);
       if (el.visible(true)) {
-        el.addClass("already-visible"); 
+        el.addClass("already-visible");
       } 
     });
 
@@ -385,9 +385,10 @@ $(document).ready(function(){
   $('.modal-trigger').on("click", function(){console.log('modal triggered');$("body").addClass("modal-open")});
   $('.close-trigger').on("click", function(){console.log('close triggered');$("body").removeClass("modal-open")});
 
+
+
 });
 /* documentReady end */
-
 
 /* shrink logo - copied from previous interactives */
 $(window).scroll(function() {
@@ -395,9 +396,25 @@ $(window).scroll(function() {
   if ($(document).scrollTop() > 50) {
     $('#head').addClass('shrink');
     $('#head .navbar-brand').addClass('shrinklogo');
-  } else {
+  } 
+  else {
     $('#head').removeClass('shrink');
     $("#head .navbar-brand").removeClass("shrinklogo");
+  }
+
+  /* sticky continent titles */
+  if(($(document).scrollTop() > ($('#tcon').height() + 75)) && ($(document).scrollTop() < ($('#mobile').height() + ($('#tcon').height() - 10))))
+  {
+    console.log('condition true');
+
+    var mrw = $('#mobile .region').width() - 26;
+    $('#mobile .region .title').css('margin-left', (mrw/2)).addClass('stick').removeClass('rotate');
+    
+  }
+  else{
+  
+    console.log('condition false');
+    $('#mobile .region .title').css('margin-left', 0).removeClass('stick').addClass('rotate');
   }
 
 });

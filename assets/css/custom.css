@@ -415,3 +415,11 @@ body.modal-open {
   to { transform: translateY(0); }
 }
 
+
+.stick {
+    margin-top: 0 !important;
+    position: fixed !important;
+    top: 12px;
+    transform: rotate(90deg);
+    transform-origin: 0 100%;
+}
