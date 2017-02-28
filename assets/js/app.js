@@ -1,11 +1,11 @@
-jQuery.ajaxSetup({async:false});
 
-/* custom function for replaceAll */
+
+/* replaceAll() - custom function for find and replace multiple occurances */
 String.prototype.replaceAll = function(search, replacement) {
     var target = this;
     return target.split(search).join(replacement);
 };
-/* */
+/* custom function for replaceAll end */
 
 /* region data containing name, selectors and hex codes */
 var region = {
@@ -72,10 +72,10 @@ var region = {
       't2': '#b07344',
       'bn': '#d3944e',
     }
-  };
+};
+/* region end */
 
-
-
+/* populateContent() - populate text paragraph */
 function populateContent(){
 
   var apiEndpoint = 'https://spreadsheets.google.com/feeds/cells/1K3W6IO4vqRljer3XDHAvrt6xSxz3d4dwnXVvdZ339i0/2/public/values?alt=json';
@@ -91,13 +91,14 @@ function populateContent(){
 
     $('.mpara').html(content);
     populateDesktop();
-    populateMobile2();
+    populateMobile();
 
   });
 
 }
+/* populateContent end */
 
-/* populate desktop by fetching data and appending to respective region */
+/* populateDesktiop() - populate desktop by fetching data and appending to respective region */
 function populateDesktop(){
   
   var leaders = [];
@@ -163,18 +164,12 @@ function populateDesktop(){
           // to avoid use imagesLoaded
           var prev_height = $('#desktop div #leader-'+(i-1)).width();
 
-          //console.log('prev top: ' + prev_top);
-          //console.log('prev height: ' + prev_height);
-
-
           $('#desktop #leader-'+i).css("top", (prev_top + prev_height)+5+"px");
 
       }
 
     }
 
-    // set region height
-    //$('#desktop .region .body').css('height', (($('#leader-'+(leaders.length - 1)).position().top+$('#leader-'+(leaders.length - 1)).innerHeight())-$(leaders[(leaders.length - 1)].region.selector).position().top)+'px');
     // set region height
     var last_top = $("#desktop #leader-"+(leaders.length-1)).position().top;
     // to avoid use imagesLoaded
@@ -183,15 +178,36 @@ function populateDesktop(){
 
     $('#desktop .region .body').css('height', ((last_top + last_height)- minus_height)+'px');
 
+    var win = $(window);
+
+    var allMods = $(".leader");
+
+    allMods.each(function(i, el) {
+      var el = $(el);
+      if (el.visible(true)) {
+        el.addClass("already-visible"); 
+      } 
+    });
+
+    win.scroll(function(event) {
+    
+      allMods.each(function(i, el) {
+        var el = $(el);
+        if (el.visible(true)) {
+          el.addClass("come-in"); 
+        } 
+      });
+    
+    });
 
   });
 
   console.log('populateDesktop executed');
 }
-/* function end */
+/* populateDesktop end */
 
-/* populate mobile view by fetching data and appending to respective region - second rendition */
-function populateMobile2(){
+/* populateMobile() - populate mobile view by fetching data and appending to respective region - second rendition */
+function populateMobile(){
   
   var leaders = [];
   var apiEndpoint = 'https://spreadsheets.google.com/feeds/list/1K3W6IO4vqRljer3XDHAvrt6xSxz3d4dwnXVvdZ339i0/od6/public/values?alt=json';
@@ -256,9 +272,6 @@ function populateMobile2(){
           // to avoid use imagesLoaded
           var prev_height = $('#mobile div #m-leader-'+(i-1)).width();
 
-          //console.log('prev_top': + prev_top);
-          //console.log('prev height: ' + prev_height);
-
           $('#mobile #m-leader-'+i).css("top", (prev_top + prev_height)+5+"px");
       }
 
@@ -306,9 +319,9 @@ function populateMobile2(){
 
   console.log('populateMobile executed');
 }
-/* function end */
+/* populateMobile end */
 
-/* */
+/* positionLeaders() - set positioning for absolute leader elements */
 function positionLeaders(){
 
   // fetch leaders in mobile view and position based on order
@@ -353,18 +366,18 @@ function positionLeaders(){
 
   console.log('positionLeaders executed');
 }
-/* */
+/* end positionLeaders */
 
-/* */
+/* handle absolute positions on window resize */
 $(window).resize(function(){
 
     positionLeaders();
   
 });
-/* */
+/* end windowResize */
 
 
-/* */
+/* trigger content populate after dom is ready */
 $(document).ready(function(){
 
   populateContent();
@@ -372,40 +385,13 @@ $(document).ready(function(){
   $('.modal-trigger').on("click", function(){console.log('modal triggered');$("body").addClass("modal-open")});
   $('.close-trigger').on("click", function(){console.log('close triggered');$("body").removeClass("modal-open")});
 
-  /* */
-
-var win = $(window);
-
-var allMods = $(".leader");
-
-allMods.each(function(i, el) {
-  var el = $(el);
-  if (el.visible(true)) {
-    el.addClass("already-visible"); 
-    console.log('already-visible');
-  } 
 });
-
-win.scroll(function(event) {
-
-  console.log('scroll working');
-  
-  allMods.each(function(i, el) {
-    var el = $(el);
-    if (el.visible(true)) {
-      el.addClass("come-in"); 
-      console.log('come-in');
-    } 
-  });
-  
-});
-
-});
-/* */
+/* documentReady end */
 
 
 /* shrink logo - copied from previous interactives */
 $(window).scroll(function() {
+
   if ($(document).scrollTop() > 50) {
     $('#head').addClass('shrink');
     $('#head .navbar-brand').addClass('shrinklogo');
@@ -441,8 +427,3 @@ function reposition() {
   // or four works better for larger screens.
   dialog.css("margin-top", Math.max(0, ($(window).height() - dialog.height()) / 2));
 }
-
-
-
-
-
