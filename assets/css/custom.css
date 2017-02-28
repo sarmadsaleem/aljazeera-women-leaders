@@ -54,8 +54,8 @@ nav.navbar {
 /* header end */
 
 /* battle ground */
-.mtitle{font-weight:200;font-size:50px; margin:25px 20px 60px 20px; text-align:center;}
-
+.mtitle{font-weight:200;font-size:50px; margin:25px 20px 40px 20px; text-align:center;}
+.mpara{font-size:18px; margin-bottom:60px;color:#414141;}
 
 .region{
 	display: inline-block;
@@ -234,8 +234,13 @@ nav.navbar {
 
 
 
+/* mobile snapshots start */
+#mobile-snapshots{margin-top:50px;}
+.mss{width:111px; height:562px; background:#ccc; display: inline-block; margin-right:10px;}
+/* mobile snapshots end */
+
 /* footer start */
-footer{margin-top:0px;}
+footer{margin-top:50px;}
 
 #footer-secondary2 nav a{
 	margin-right:20px;
@@ -392,5 +397,21 @@ footer{margin-top:0px;}
 
 body.modal-open {
     overflow: hidden;
+}
+
+.come-in {
+  transform: translateY(150px);
+  animation: come-in 0.8s ease forwards;
+}
+.come-in:nth-child(odd) {
+  animation-duration: 0.6s;
+}
+.already-visible {
+  transform: translateY(0);
+  animation: none;
+}
+
+@keyframes come-in {
+  to { transform: translateY(0); }
 }
 
