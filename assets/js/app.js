@@ -1,5 +1,3 @@
-
-
 /* replaceAll() - custom function for find and replace multiple occurances */
 String.prototype.replaceAll = function(search, replacement) {
     var target = this;
