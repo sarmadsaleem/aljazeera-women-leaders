@@ -176,28 +176,6 @@ function populateDesktop(){
 
     $('#desktop .region .body').css('height', ((last_top + last_height)- minus_height)+'px');
 
-    var win = $(window);
-
-    var allMods = $(".leader");
-
-    allMods.each(function(i, el) {
-      var el = $(el);
-      if (el.visible(true)) {
-        el.addClass("already-visible"); 
-      } 
-    });
-
-    win.scroll(function(event) {
-    
-      allMods.each(function(i, el) {
-        var el = $(el);
-        if (el.visible(true)) {
-          el.addClass("come-in"); 
-        } 
-      });
-    
-    });
-
   });
 
   console.log('populateDesktop executed');
@@ -313,7 +291,31 @@ function populateMobile(){
     var minus_height = $(leaders[leaders.length-1].region.mselector).position().top;
     $('#mobile .region .body').css('height', ((last_top + last_height)- minus_height)+'px');
 
+    var win = $(window);
+
+    var allMods = $(".leader");
+
+    allMods.each(function(i, el) {
+      var el = $(el);
+      if (el.visible(true)) {
+        el.addClass("already-visible"); 
+      } 
+    });
+
+    win.scroll(function(event) {
+    
+      allMods.each(function(i, el) {
+        var el = $(el);
+        if (el.visible(true)) {
+          el.addClass("come-in"); 
+        } 
+      });
+    
+    });
+
   });
+
+  
 
   console.log('populateMobile executed');
 }
