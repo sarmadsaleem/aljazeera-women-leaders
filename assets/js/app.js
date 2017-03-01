@@ -405,7 +405,7 @@ $(document).ready(function(){
 
   $.each(region, function(index, value){
 
-    $(value.mselector + ' .rtc').css({'height' : value.rtc, 'background' : value.color});
+    $(value.mselector + ' .rtc').css({'height' : value.rtc, 'background' : value.color, 'visibility' : 'visible'});
 
   });
 
@@ -424,11 +424,15 @@ $(window).scroll(function() {
     $("#head .navbar-brand").removeClass("shrinklogo");
   }
 
+  var scrollTop = $(document).scrollTop();
+  var tconh = $('#tcon').height();
+
   /* sticky continent titles */
-  if(($(document).scrollTop() > ($('#tcon').height() + 85)) && ($(document).scrollTop() < ($('#mobile').height() + ($('#tcon').height() - 100))))
+  if((scrollTop > (tconh + 85)) && (scrollTop < (tconh + 2500)))
   {
     //var mrw = $('#mobile .region').width() - 26;
     $('#mobile .region .rtc').addClass('stick');
+    $('#mobile .region .rtc').css({'visibility':'visible'});
     $('#mobile .region .rtc').width($('#mobile .region').width());
 
 
@@ -438,6 +442,12 @@ $(window).scroll(function() {
 
     });
  
+  }
+  else if(scrollTop > (tconh + 2500))
+  {
+    $('#mobile .region .rtc').css({'visibility':'hidden'});
+
+
   }
   else{
     $('#mobile .region .rtc').removeClass('stick');
