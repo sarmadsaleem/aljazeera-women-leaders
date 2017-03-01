@@ -425,7 +425,7 @@ $(window).scroll(function() {
   }
 
   /* sticky continent titles */
-  if(($(document).scrollTop() > ($('#tcon').height() + 85)) && ($(document).scrollTop() < ($('#mobile').height() + ($('#tcon').height() - 50))))
+  if(($(document).scrollTop() > ($('#tcon').height() + 85)) && ($(document).scrollTop() < ($('#mobile').height() + ($('#tcon').height() - 100))))
   {
     //var mrw = $('#mobile .region').width() - 26;
     $('#mobile .region .rtc').addClass('stick');
