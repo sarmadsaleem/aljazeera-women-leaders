@@ -286,6 +286,14 @@ footer{margin-top:20px;}
 .aj-f-cred{text-align: right;}
 /* footer end */
 
+.stick {
+    margin-top: 0 !important;
+    padding-top:40px !important;
+    position: fixed !important;
+    top:25px;
+    z-index:100;
+}
+
 
 /* media queries start */
 @media screen and (max-width: 991px) {
@@ -388,6 +396,8 @@ footer{margin-top:20px;}
     #head .navbar-brand{left: 75px !important; }
     .mtitle{font-size:38px;margin-bottom:30px !important; }
 
+    .stick{padding-top:20px !important;}
+
 
 }
 
@@ -445,13 +455,7 @@ body.modal-open {
 }
 
 
-.stick {
-    margin-top: 0 !important;
-    padding-top:40px !important;
-    position: fixed !important;
-    top:25px;
-    z-index:100;
-}
+
 
 #years{
     position:absolute;
