@@ -84,7 +84,7 @@ nav.navbar {
 #mobile #middle-east{background:#cc9966;}
 #mobile .region{margin:0;float:left; width: 14.2%}
 #mobile .region .title{white-space: nowrap;text-align: left; color:#ccc; /*margin-top:45%;*/}
-#mobile .region .rtc{padding-top:45%;}
+#mobile .region .rtc{padding-top:45%;z-index:100;}
 
 #mobile .region .body{background:transparent;}
 
