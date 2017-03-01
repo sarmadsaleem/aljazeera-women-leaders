@@ -435,6 +435,8 @@ $(window).scroll(function() {
     $('#mobile .region .rtc').css({'visibility':'visible'});
     $('#mobile .region .rtc').width($('#mobile .region').width());
 
+    //$('#desktop .title').css({'position': 'fixed', 'top':'20px'});
+
 
     $.each(region, function(index, value){
 
